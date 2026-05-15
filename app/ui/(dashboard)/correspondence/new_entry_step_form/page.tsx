@@ -121,7 +121,7 @@ function StepIndicator({ current }: { current: number }) {
 // =========================================================================================================
 // UI Section
 // =========================================================================================================
-export default function page() {
+export default function Page() {
   // Variables
   const [step, setStep] = useState(1)
 
@@ -143,6 +143,7 @@ export default function page() {
     defaultValues: {
       assignee: [
         {
+          assigneeType: "",
           assigneeName: "",
           assignOn: undefined as unknown as Date,
         },
@@ -204,15 +205,12 @@ export default function page() {
         </div>
 
         {/* Form Card Section */}
-        <div id="form" className="border-2 border-red-500">
+        <div id="form">
           <form id="myname_form" onSubmit={form.handleSubmit(onSubmit)}>
             <FieldGroup>
               {step === 1 && (
-                <Card className="border-2 border-yellow-500">
-                  <div
-                    id="complainer"
-                    className="rounded-tl-xl rounded-tr-xl border-2 border-blue-500"
-                  >
+                <Card>
+                  <div id="complainer" className="rounded-tl-xl rounded-tr-xl">
                     <div className="form-section-heading">
                       <h1 className="font-bold">Complainer Details</h1>
                     </div>
@@ -357,7 +355,7 @@ export default function page() {
                   {/* Correspondence Section ----------------------------------------------------------- */}
                   <div
                     id="correspondence"
-                    className="rounded-tl-xl rounded-tr-xl border-2 border-blue-500"
+                    className="rounded-tl-xl rounded-tr-xl"
                   >
                     <div className="form-section-heading">
                       <h1 className="font-bold">Correspondence Details</h1>
@@ -651,7 +649,7 @@ export default function page() {
 
               {step === 3 && (
                 <Card>
-                  <CardHeader className="pb-4">
+                  <CardHeader className="py-4">
                     <div className="flex items-center gap-2">
                       <UserPlus className="h-5 w-5 text-primary" />
                       <CardTitle className="text-lg">
@@ -660,8 +658,7 @@ export default function page() {
                     </div>
                     <CardDescription>
                       System Administrator assigns one or more responsible
-                      persons or units and sets the expected "Response On" date
-                      for each.
+                      persons or units and sets the expected date for each.
                     </CardDescription>
                   </CardHeader>
 
@@ -669,13 +666,13 @@ export default function page() {
                     {fields.map((field, index) => (
                       <div
                         key={field.id}
-                        className="relative space-y-4 rounded-lg border bg-card p-4"
+                        className="relative mt-1 mb-3 space-y-4 rounded-lg border bg-card p-4"
                       >
                         {/* Assignee badge */}
                         <div className="flex items-center justify-between">
                           <Badge
                             variant="outline"
-                            className="text-xs font-semibold"
+                            className="border border-emerald-500 text-xs font-semibold"
                           >
                             Assignee #{index + 1}
                           </Badge>
@@ -692,8 +689,51 @@ export default function page() {
                           )}
                         </div>
 
+                        <Controller
+                          control={formAssignee.control}
+                          name={`assignee.${index}.assigneeType`}
+                          render={({ field, fieldState }) => (
+                            <Field>
+                              {/* <FieldLabel>Nature of Response</FieldLabel> */}
+                              <RadioGroup
+                                value={field.value}
+                                onValueChange={field.onChange}
+                                className="flex"
+                              >
+                                <div className="flex gap-2">
+                                  <RadioGroupItem value="Person" id="person" />
+                                  <div className="flex">
+                                    <Label htmlFor="person">
+                                      <UserPlus className="h-4 w-4" /> Person
+                                    </Label>
+                                  </div>
+                                </div>
+                                <div className="flex gap-2">
+                                  <RadioGroupItem value="Unit" id="unit" />
+                                  <div className="flex">
+                                    <Label htmlFor="unit">
+                                      <Building2 className="h-4 w-4" /> Unit
+                                    </Label>
+                                  </div>
+                                </div>
+                              </RadioGroup>
+                              {fieldState.invalid && (
+                                <FieldError
+                                  className="text-xs"
+                                  errors={[fieldState.error]}
+                                />
+                              )}
+                            </Field>
+                          )}
+                        />
+
                         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                          {/* Response On Date — set by System Administrator */}
+                          <div>
+                            <h1>Column1</h1>
+                          </div>
+                          <div>
+                            <h1>Column2</h1>
+                          </div>
                         </div>
                       </div>
                     ))}
@@ -702,12 +742,12 @@ export default function page() {
                     <Button
                       type="button"
                       variant="outline"
-                      className="w-full border-dashed"
+                      className="my-5 w-full border-dashed"
                       onClick={() =>
                         append({
-                          type: "person",
-                          name: "",
-                          responseOnDate: undefined as unknown as Date,
+                          assigneeType: "person",
+                          assigneeName: "",
+                          assignOn: undefined as unknown as Date,
                         })
                       }
                     >

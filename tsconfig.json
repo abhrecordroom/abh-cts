@@ -19,8 +19,9 @@
       }
     ],
     "ignoreDeprecations": "6.0",
-    "baseUrl": ".",
+    // "baseUrl": ".",
     "paths": {
+      ".": ["./"],
       "@/*": ["./*"]
     }
   },

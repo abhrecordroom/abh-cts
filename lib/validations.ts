@@ -72,6 +72,7 @@ export type categoryFormSchemaType = z.infer<typeof categoryFormSchema>
 export const assigneeFormSchema = z.object({
   assignee: z.array(
     z.object({
+      assigneeType: z.string().min(1, "Assigee Type is Required"),
       assigneeName: z.string().min(1, "Category is Required"),
       assignOn: z.date({ error: "Sumited Date is required" }),
     })
