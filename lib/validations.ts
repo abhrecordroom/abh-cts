@@ -2,36 +2,18 @@ import z from "zod"
 
 // Validation for Correspondence form
 export const formSchema = z.object({
-  submittedOn: z.date({ error: "Sumited Date is required" }),
-
+  submittedOn: z.date({ error: "Sumited date is required" }),
   pageNo: z.string().min(1, "Page no is required"),
-
   unit: z.string().min(1, "Please select a unit"),
-
-  inchargeName: z
-    .string()
-    .min(3, "Name must be at least 5 characters")
-    .max(32, "Name must be at most 32 characters"),
-
-  corresTitle: z
-    .string()
-    .min(5, "Name must be at least 5 characters")
-    .max(100, "Name must be at most 100 characters"),
-
-  corresDescription: z
-    .string()
-    .min(5, "Description must be at least 10 characters")
-    .max(500, "Name must be at most 100 characters"),
-
+  inchargeName: z.string().min(1, "Incharge name is required"),
+  corresTitle: z.string().min(1, "Title is required"),
+  corresDescription: z.string().min(1, "Description is required"),
   category: z.string().min(1, "Please select category"),
-
   responseNature: z.enum(["Emergency", "Urgent", "Not-urgent"], {
     error: "Please select response nature",
   }),
 
-  approvedOn: z.date({
-    error: "HOI Apporved Date is required",
-  }),
+  approvedOn: z.date({ error: "HOI apporved date is required" }),
 })
 
 export type formSchemaType = z.infer<typeof formSchema>
@@ -49,8 +31,9 @@ export type designationFormSchemaType = z.infer<typeof designationFormSchema>
 
 // Validation for unit/ward form
 export const unitFormSchema = z.object({
-  unitName: z.string().min(1, "Name of unit required"),
-  unitCode: z.string().min(1, "Code of unit required"),
+  unitName: z.string().min(1, "Unit name is required"),
+  unitCode: z.string().min(1, "Unit code is required"),
+  unitDescription: z.string(),
   activeState: z.enum(["Active", "Disable"], {
     error: "Must select active state",
   }),

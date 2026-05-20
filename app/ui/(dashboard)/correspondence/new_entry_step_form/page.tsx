@@ -81,7 +81,7 @@ const STEPS = [
 
 function StepIndicator({ current }: { current: number }) {
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center justify-center gap-2">
       {STEPS.map((step, i) => (
         <div key={step.id} className="flex items-center gap-2">
           <div
@@ -188,7 +188,7 @@ export default function Page() {
   // UI Render-----------------------------------------------------------------------------------------------
   return (
     <main className="w-full rounded-xl bg-emerald-100 p-5">
-      <div className="w-1/2 rounded-2xl bg-emerald-50 shadow">
+      <div className="rounded-2xl bg-emerald-50 shadow sm:w-full md:w-3/4">
         {/* Indicator Menu Header */}
         <div id="indicator" className="p-3">
           <div className="mb-3">
@@ -224,7 +224,10 @@ export default function Page() {
                           control={form.control}
                           render={({ field, fieldState }) => (
                             <Field>
-                              <FieldLabel>Submitted on</FieldLabel>
+                              <FieldLabel>
+                                Submitted on
+                                <span className="text-destructive">*</span>
+                              </FieldLabel>
                               <Popover>
                                 <PopoverTrigger asChild>
                                   <Button
@@ -235,7 +238,7 @@ export default function Page() {
                                     {field.value ? (
                                       format(field.value, "dd/MM/yyyy")
                                     ) : (
-                                      <span>Pick a date</span>
+                                      <span>Pick a submitted date</span>
                                     )}
                                     <ChevronDownIcon />
                                   </Button>
@@ -269,11 +272,14 @@ export default function Page() {
                           control={form.control}
                           render={({ field, fieldState }) => (
                             <Field>
-                              <FieldLabel>Book Page no</FieldLabel>
+                              <FieldLabel>
+                                Book Page no
+                                <span className="text-destructive">*</span>
+                              </FieldLabel>
                               <Input
                                 {...field}
                                 id="pageNo"
-                                placeholder="Enter the date"
+                                placeholder="Enter the book page no"
                               />
                               {fieldState.invalid && (
                                 <FieldError
@@ -293,7 +299,9 @@ export default function Page() {
                           control={form.control}
                           render={({ field, fieldState }) => (
                             <Field>
-                              <FieldLabel>Unit / Ward</FieldLabel>
+                              <FieldLabel>
+                                Unit<span className="text-destructive">*</span>
+                              </FieldLabel>
                               <Combobox
                                 value={field.value}
                                 onValueChange={field.onChange}
@@ -333,7 +341,10 @@ export default function Page() {
                           control={form.control}
                           render={({ field, fieldState }) => (
                             <Field>
-                              <FieldLabel>Name with initial</FieldLabel>
+                              <FieldLabel>
+                                Name with initial
+                                <span className="text-destructive">*</span>
+                              </FieldLabel>
                               <Input
                                 {...field}
                                 id="inchargeName"
@@ -368,7 +379,10 @@ export default function Page() {
                         control={form.control}
                         render={({ field, fieldState }) => (
                           <Field>
-                            <FieldLabel>Category</FieldLabel>
+                            <FieldLabel>
+                              Category
+                              <span className="text-destructive">*</span>
+                            </FieldLabel>
                             <Combobox
                               value={field.value}
                               onValueChange={field.onChange}
@@ -408,7 +422,9 @@ export default function Page() {
                         control={form.control}
                         render={({ field, fieldState }) => (
                           <Field>
-                            <FieldLabel>Subject / Title</FieldLabel>
+                            <FieldLabel>
+                              Subject<span className="text-destructive">*</span>
+                            </FieldLabel>
                             <Input
                               {...field}
                               id="pageNo"
@@ -430,11 +446,14 @@ export default function Page() {
                         control={form.control}
                         render={({ field, fieldState }) => (
                           <Field>
-                            <FieldLabel>Subject</FieldLabel>
+                            <FieldLabel>
+                              Description
+                              <span className="text-destructive">*</span>
+                            </FieldLabel>
                             <Textarea
                               {...field}
                               id="description"
-                              placeholder="Enter correspondence description"
+                              placeholder={`Enter your description \n 1. \n 2. \n 3.`}
                             />
                             {fieldState.invalid && (
                               <FieldError
@@ -457,7 +476,7 @@ export default function Page() {
                       <h1 className="font-bold">Nature of Response</h1>
                     </div>
 
-                    <div className="p-5">
+                    <div className="w-1/2 p-5">
                       {/* Nature of Response */}
                       <Controller
                         name="responseNature"
@@ -469,15 +488,17 @@ export default function Page() {
                               id="responseNature"
                               value={field.value}
                               onValueChange={field.onChange}
-                              className="flex w-full justify-around"
+                              className="flex justify-around"
                             >
                               <div className="flex w-40 flex-col items-center justify-center gap-3 rounded border-2 border-gray-300 p-3 text-red-800">
-                                <RadioGroupItem
-                                  value="Emergency"
-                                  id="emergency"
-                                />
-                                <div className="flex flex-col items-center justify-center text-center">
-                                  <Label htmlFor="emergency">Emergency</Label>
+                                <div className="flex flex-col items-center justify-center gap-2 text-center">
+                                  <Label htmlFor="emergency">
+                                    🚨 Emergency
+                                  </Label>
+                                  <RadioGroupItem
+                                    value="Emergency"
+                                    id="emergency"
+                                  />
                                   <p className="text-xs text-gray-400">
                                     [With in 2 days]
                                   </p>
@@ -485,9 +506,9 @@ export default function Page() {
                               </div>
 
                               <div className="flex w-40 flex-col items-center justify-center gap-3 rounded border-2 border-gray-300 p-3 text-orange-800">
-                                <RadioGroupItem value="Urgent" id="urgent" />
-                                <div className="flex flex-col items-center justify-center text-center">
-                                  <Label htmlFor="urgent">Urgent</Label>
+                                <div className="flex flex-col items-center justify-center gap-2 text-center">
+                                  <Label htmlFor="urgent">⚠️ Urgent</Label>
+                                  <RadioGroupItem value="Urgent" id="urgent" />
                                   <p className="text-xs text-gray-400">
                                     [With in 3-7 days]
                                   </p>
@@ -495,12 +516,14 @@ export default function Page() {
                               </div>
 
                               <div className="flex w-40 flex-col items-center justify-center gap-3 rounded border-2 border-gray-300 p-3 text-green-800">
-                                <RadioGroupItem
-                                  value="Not-urgent"
-                                  id="not-urgent"
-                                />
-                                <div className="flex flex-col items-center justify-center text-center">
-                                  <Label htmlFor="not-urgent">Not Urgent</Label>
+                                <div className="flex flex-col items-center justify-center gap-2 text-center">
+                                  <Label htmlFor="not-urgent">
+                                    🔰 Not Urgent
+                                  </Label>
+                                  <RadioGroupItem
+                                    value="Not-urgent"
+                                    id="not-urgent"
+                                  />
                                   <p className="text-xs text-gray-400">
                                     [With in 14 days]
                                   </p>
@@ -577,7 +600,7 @@ export default function Page() {
 
                     <Separator />
 
-                    <div className="flex flex-col gap-3 p-5">
+                    <div className="flex flex-col gap-3 p-3">
                       {/* HOI Approvel */}
                       <Controller
                         name="approvedOn"
@@ -623,26 +646,6 @@ export default function Page() {
                         )}
                       />
                     </div>
-                    {/* <FormField
-                      control={form.control}
-                      name="hodApprovedDate"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>
-                            HOD Approved Date{" "}
-                            <span className="text-destructive">*</span>
-                          </FormLabel>
-                          <FormControl>
-                            <DatePicker
-                              value={field.value}
-                              onChange={field.onChange}
-                              placeholder="Select HOD approval date"
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    /> */}
                   </CardContent>
                 </Card>
               )}
@@ -699,20 +702,22 @@ export default function Page() {
                                 value={field.value}
                                 onValueChange={field.onChange}
                                 className="flex"
+                                defaultValue="unit"
                               >
                                 <div className="flex gap-2">
-                                  <RadioGroupItem value="Person" id="person" />
-                                  <div className="flex">
-                                    <Label htmlFor="person">
-                                      <UserPlus className="h-4 w-4" /> Person
-                                    </Label>
-                                  </div>
-                                </div>
-                                <div className="flex gap-2">
-                                  <RadioGroupItem value="Unit" id="unit" />
+                                  <RadioGroupItem value="unit" id="unit" />
                                   <div className="flex">
                                     <Label htmlFor="unit">
                                       <Building2 className="h-4 w-4" /> Unit
+                                    </Label>
+                                  </div>
+                                </div>
+
+                                <div className="flex gap-2">
+                                  <RadioGroupItem value="person" id="person" />
+                                  <div className="flex">
+                                    <Label htmlFor="person">
+                                      <UserPlus className="h-4 w-4" /> Person
                                     </Label>
                                   </div>
                                 </div>
@@ -730,9 +735,123 @@ export default function Page() {
                         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                           <div>
                             <h1>Column1</h1>
+                            {/* Page no */}
+                            {/* <Controller
+                              name={`assignee.${index}.assigneeName`}
+                              control={formAssignee.control}
+                              render={({ field, fieldState }) => (
+                                <Field>
+                                  <FieldLabel>
+                                    Book Page no
+                                    <span className="text-destructive">*</span>
+                                  </FieldLabel>
+                                  <Input
+                                    {...field}
+                                    id="pageNo"
+                                    placeholder="Enter the book page no"
+                                  />
+                                  {fieldState.invalid && (
+                                    <FieldError
+                                      className="text-xs"
+                                      errors={[fieldState.error]}
+                                    />
+                                  )}
+                                </Field>
+                              )}
+                            /> */}
+
+                            <Controller
+                              name={`assignee.${index}.assigneeName`}
+                              control={formAssignee.control}
+                              render={({ field, fieldState }) => (
+                                <Field>
+                                  <FieldLabel>
+                                    Unit
+                                    <span className="text-destructive">*</span>
+                                  </FieldLabel>
+                                  <Combobox
+                                    value={field.value}
+                                    onValueChange={field.onChange}
+                                    items={Units}
+                                  >
+                                    <ComboboxInput
+                                      className="bg-gray-100"
+                                      placeholder="Select a Unit"
+                                    />
+                                    <ComboboxContent>
+                                      <ComboboxEmpty>
+                                        No items found.
+                                      </ComboboxEmpty>
+                                      <ComboboxList>
+                                        {(item) => (
+                                          <ComboboxItem
+                                            key={item.unit_id}
+                                            value={item.unit_name}
+                                          >
+                                            {item.unit_name}
+                                          </ComboboxItem>
+                                        )}
+                                      </ComboboxList>
+                                    </ComboboxContent>
+                                  </Combobox>
+                                  {fieldState.invalid && (
+                                    <FieldError
+                                      className="text-xs"
+                                      errors={[fieldState.error]}
+                                    />
+                                  )}
+                                </Field>
+                              )}
+                            />
                           </div>
                           <div>
                             <h1>Column2</h1>
+                            <Controller
+                              name={`assignee.${index}.assignOn`}
+                              control={formAssignee.control}
+                              render={({ field, fieldState }) => (
+                                <Field>
+                                  <FieldLabel>
+                                    Assigned on
+                                    <span className="text-destructive">*</span>
+                                  </FieldLabel>
+                                  <Popover>
+                                    <PopoverTrigger asChild>
+                                      <Button
+                                        variant="outline"
+                                        data-empty={!field.value}
+                                        className="w-53 justify-between bg-gray-100 text-left font-normal data-[empty=true]:text-muted-foreground"
+                                      >
+                                        {field.value ? (
+                                          format(field.value, "dd/MM/yyyy")
+                                        ) : (
+                                          <span>Pick a submitted date</span>
+                                        )}
+                                        <ChevronDownIcon />
+                                      </Button>
+                                    </PopoverTrigger>
+                                    <PopoverContent
+                                      className="w-auto p-0"
+                                      align="start"
+                                    >
+                                      <Calendar
+                                        mode="single"
+                                        selected={field.value}
+                                        onSelect={field.onChange}
+                                        defaultMonth={field.value}
+                                      />
+                                    </PopoverContent>
+                                  </Popover>
+
+                                  {fieldState.invalid && (
+                                    <FieldError
+                                      className="text-xs"
+                                      errors={[fieldState.error]}
+                                    />
+                                  )}
+                                </Field>
+                              )}
+                            />
                           </div>
                         </div>
                       </div>
@@ -745,7 +864,7 @@ export default function Page() {
                       className="my-5 w-full border-dashed"
                       onClick={() =>
                         append({
-                          assigneeType: "person",
+                          assigneeType: "unit",
                           assigneeName: "",
                           assignOn: undefined as unknown as Date,
                         })
@@ -767,24 +886,33 @@ export default function Page() {
             </FieldGroup>
 
             {/* ── Navigation buttons ─────────────────────────────────────────── */}
-            <div className="flex items-center justify-between pt-2">
+            <div className="flex items-center justify-between p-3">
               <Button
                 type="button"
                 variant="outline"
                 onClick={() => setStep((s) => s - 1)}
                 disabled={step === 1}
+                className="shadow"
               >
                 Back
               </Button>
 
               <div className="flex gap-3">
                 {step === 1 && (
-                  <Button type="button" onClick={handleNextToStep2}>
-                    Next: HOD Approval
+                  <Button
+                    type="button"
+                    className="shadow"
+                    onClick={handleNextToStep2}
+                  >
+                    Next: HOI Approval
                   </Button>
                 )}
                 {step === 2 && (
-                  <Button type="button" onClick={handleNextToStep3}>
+                  <Button
+                    type="button"
+                    className="shadow"
+                    onClick={handleNextToStep3}
+                  >
                     Next: Assign Responsible
                   </Button>
                 )}

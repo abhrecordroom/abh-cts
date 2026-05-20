@@ -8,11 +8,12 @@ import {
   // Map,
   // PieChart,
   // Settings2,
-  SquareTerminal,
+  FileChartColumn,
   Gauge,
   BookCheck,
   SquareUserRound,
-  FileSliders
+  FileSliders,
+  BrickWallShield,
 } from "lucide-react"
 
 const data = {
@@ -55,41 +56,73 @@ const data = {
           title: "New Entry",
           url: "/ui/correspondence/new_entry_step_form",
         },
-        {
-          title: "Assign Person",
-          url: "/ui/dash_unitview",
-        },
       ],
     },
     {
       title: "Complainer",
       url: "#",
-      icon:   SquareUserRound,
+      icon: SquareUserRound,
       isActive: false,
       items: [
         {
-          title: "New Entry",
+          title: "Unit",
           url: "/ui/complainer/new_entry",
         },
         {
-          title: "View Data",
+          title: "Person",
           url: "/ui/dash_unitview",
         },
       ],
     },
     {
-      title: "Utilities",
+      title: "References",
       url: "#",
       icon: FileSliders,
       isActive: false,
       items: [
         {
-          title: "Job Designations",
+          title: "Designation",
           url: "/ui/utilities/designation",
+        },
+        {
+          title: "Response Nature",
+          url: "/ui/utilities/category",
         },
         {
           title: "Category",
           url: "/ui/utilities/category",
+        },
+        {
+          title: "Status",
+          url: "/ui/utilities/category",
+        },
+      ],
+    },
+    {
+      title: "Master",
+      url: "#",
+      icon: BrickWallShield,
+      isActive: false,
+      items: [
+        {
+          title: "User",
+          url: "/ui/utilities/designation",
+        },
+        {
+          title: "Activity Log",
+          url: "/ui/utilities/category",
+        },
+      ],
+    },
+    {
+      title: "Analytics",
+      url: "#",
+      icon: FileChartColumn,
+      isActive: false,
+      items: [
+        {
+          title: "Report",
+          url: "/ui/utilities/designation",
         },
       ],
     },
