@@ -82,19 +82,19 @@ const data = {
       items: [
         {
           title: "Designation",
-          url: "/ui/utilities/designation",
+          url: "/ui/references/designation",
         },
         {
           title: "Response Nature",
-          url: "/ui/utilities/category",
+          url: "/ui/references/response_nature",
         },
         {
           title: "Category",
-          url: "/ui/utilities/category",
+          url: "/ui/references/category",
         },
         {
           title: "Status",
-          url: "/ui/utilities/category",
+          url: "/ui/references/status",
         },
       ],
     },
@@ -106,11 +106,11 @@ const data = {
       items: [
         {
           title: "User",
-          url: "/ui/utilities/designation",
+          url: "/ui/utilities/user",
         },
         {
           title: "Activity Log",
-          url: "/ui/utilities/category",
+          url: "/ui/utilities/activity_log",
         },
       ],
     },

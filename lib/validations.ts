@@ -63,3 +63,16 @@ export const assigneeFormSchema = z.object({
 })
 
 export type assigneeFormSchemaType = z.infer<typeof assigneeFormSchema>
+
+// References/responseNature
+export const resposeNatureFormSchema = z.object({
+  title: z.string().min(1, "Title is Required"),
+  description: z.string(),
+  activeState: z.enum(["Active", "Disable"], {
+    error: "Must select active state",
+  }),
+})
+
+export type resposeNatureFormSchemaType = z.infer<
+  typeof resposeNatureFormSchema
+>
