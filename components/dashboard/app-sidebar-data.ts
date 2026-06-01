@@ -66,11 +66,11 @@ const data = {
       items: [
         {
           title: "Unit",
-          url: "/ui/complainer/new_entry",
+          url: "/ui/complainer/unit",
         },
         {
           title: "Person",
-          url: "/ui/dash_unitview",
+          url: "/ui/complainer/person",
         },
       ],
     },

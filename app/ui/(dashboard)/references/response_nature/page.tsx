@@ -47,7 +47,7 @@ const columns: ColumnDef<ResponseNature>[] = [
     key: "activeState",
     label: "STATE",
     sortable: false,
-    render: (val: any) => <ResponseBadge status={String(val)} />,
+    render: (val: unknown) => <ResponseBadge status={String(val)} />,
   },
 ]
 
@@ -65,11 +65,11 @@ export default function Page() {
     alert(`${data.title},"\n",${data.description},"\n",${data.activeState}`)
   }
 
-  function handleEdit(row: any) {
-    alert(row.id)
+  function handleEdit(row: resposeNatureFormSchemaType) {
+    alert(row.title)
   }
-  function handleDelete(row: any) {
-    alert(row.id)
+  function handleDelete(row: resposeNatureFormSchemaType) {
+    alert(row.title)
   }
 
   return (

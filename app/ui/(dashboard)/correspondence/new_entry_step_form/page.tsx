@@ -51,7 +51,7 @@ import { ChevronDownIcon } from "lucide-react"
 // utility import
 import { format } from "date-fns"
 import Units from "@/lib/units"
-import Category from "@/lib/categories"
+import { category, Category } from "@/lib/category"
 // Validation import
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
@@ -386,7 +386,7 @@ export default function Page() {
                             <Combobox
                               value={field.value}
                               onValueChange={field.onChange}
-                              items={Category}
+                              items={category}
                             >
                               <ComboboxInput
                                 className="bg-gray-100"
@@ -398,9 +398,9 @@ export default function Page() {
                                   {(item) => (
                                     <ComboboxItem
                                       key={item.id}
-                                      value={item.name}
+                                      value={item.title}
                                     >
-                                      {item.name}
+                                      {item.title}
                                     </ComboboxItem>
                                   )}
                                 </ComboboxList>

@@ -26,33 +26,56 @@ import { format } from "date-fns"
 import { FaCirclePlus } from "react-icons/fa6"
 // Validation import
 import { zodResolver } from "@hookform/resolvers/zod"
-import { designationFormSchema, designationFormSchemaType } from "@/lib/validations"
+import {
+  designationFormSchema,
+  designationFormSchemaType,
+} from "@/lib/validations"
+import { Designation, designation } from "@/lib/designation"
+import { DataTable, ColumnDef } from "@/components/table/data-table"
+import { ActiveState } from "@/components/status_badge/activeState"
+import { Pencil, Trash2 } from "lucide-react"
+
+const columns: ColumnDef<Designation>[] = [
+  { key: "id", label: "ID" },
+  { key: "title", label: "TITLE" },
+  { key: "code", label: "CODE" },
+  {
+    key: "activeState",
+    label: "STATE",
+    sortable: false,
+    render: (val: unknown) => <ActiveState status={String(val)} />,
+  },
+]
 
 export default function Page() {
   const form = useForm<designationFormSchemaType>({
     resolver: zodResolver(designationFormSchema),
     defaultValues: {
-      designationName:"",
-      designationCode:"",
-      activeState:"Active"
+      title: "",
+      code: "",
+      activeState: "Active",
     },
   })
 
   async function onSubmit(data: designationFormSchemaType) {
-    
-    alert(
-      `${data.designationName},"\n ",${data.designationCode},"\n",${data.activeState}`
-    )
+    alert(`${data.title},"\n ",${data.code},"\n",${data.activeState}`)
+  }
+
+  function handleEdit(row: designationFormSchemaType) {
+    alert(row.title)
+  }
+  function handleDelete(row: designationFormSchemaType) {
+    alert(row.title)
   }
 
   return (
-    <main id="main-div" className="w-1/2">
+    <main id="main-div" className="w-3/4">
       <div id="form-set" className="flex justify-end p-3">
         <Dialog>
           <DialogTrigger>
-            <span className="flex items-center gap-2 rounded-xl bg-gray-900 p-2 text-white">
+            <span className="flex items-center gap-2 rounded-xl bg-primary px-2 py-1 text-white">
               <FaCirclePlus className="h-5 w-5" />
-              Add Designation
+              Add New
             </span>
           </DialogTrigger>
 
@@ -73,15 +96,15 @@ export default function Page() {
                     <div className="flex flex-col gap-5 p-3">
                       {/* Designation Name */}
                       <Controller
-                        name="designationName"
+                        name="title"
                         control={form.control}
                         render={({ field, fieldState }) => (
                           <Field>
-                            <FieldLabel>Name of Designation</FieldLabel>
+                            <FieldLabel>Title</FieldLabel>
                             <Input
                               {...field}
-                              id="designationName"
-                              placeholder="Enter your designation"
+                              id="title"
+                              placeholder="Enter the designation"
                               value={field.value}
                             />
                             {fieldState.invalid && (
@@ -96,14 +119,14 @@ export default function Page() {
 
                       {/* Designation code */}
                       <Controller
-                        name="designationCode"
+                        name="code"
                         control={form.control}
                         render={({ field, fieldState }) => (
                           <Field>
-                            <FieldLabel>Code of Designation</FieldLabel>
+                            <FieldLabel>Short Code</FieldLabel>
                             <Input
                               {...field}
-                              id="pageNo"
+                              id="code"
                               placeholder="Enter short form of designation"
                               value={field.value}
                             />
@@ -152,7 +175,13 @@ export default function Page() {
                     </div>
                   </div>
                   <div className="flex justify-center gap-3">
-                    <Button type="reset" form="myname_form" variant="outline" className="w-40" onClick={()=>form.reset()}>
+                    <Button
+                      type="reset"
+                      form="myname_form"
+                      variant="outline"
+                      className="w-40"
+                      onClick={() => form.reset()}
+                    >
                       Reset
                     </Button>
                     <Button type="submit" form="myname_form" className="w-40">
@@ -173,7 +202,36 @@ export default function Page() {
           </h1>
         </div>
 
-        <div className="p-3">Table</div>
+        <div className="p-3">
+          <DataTable
+            data={designation}
+            columns={columns}
+            pageSize={10}
+            searchPlaceholder="Search Response nature"
+            actions={(row) => (
+              <div className="flex items-center gap-2">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => handleEdit(row)}
+                  className="h-7 px-2 text-xs"
+                >
+                  <Pencil className="mr-1 h-3 w-3" />
+                  Edit
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => handleDelete(row)}
+                  className="h-7 border-red-200 px-2 text-xs text-red-600 hover:bg-red-50 hover:text-red-700"
+                >
+                  <Trash2 className="mr-1 h-3 w-3" />
+                  Delete
+                </Button>
+              </div>
+            )}
+          />
+        </div>
       </div>
     </main>
   )
