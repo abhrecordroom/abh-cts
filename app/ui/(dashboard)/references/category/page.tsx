@@ -26,7 +26,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { FaCirclePlus } from "react-icons/fa6"
 // Validation import
 import { zodResolver } from "@hookform/resolvers/zod"
-import { categoryFormSchema, categoryFormSchemaType } from "@/lib/validations"
+import { categorySchema, categorySchemaType } from "@/lib/validations"
 import { Category, category } from "@/lib/category"
 
 import { ActiveState } from "@/components/status_badge/activeState"
@@ -46,8 +46,8 @@ const columns: ColumnDef<Category>[] = [
 ]
 
 export default function Page() {
-  const form = useForm<categoryFormSchemaType>({
-    resolver: zodResolver(categoryFormSchema),
+  const form = useForm<categorySchemaType>({
+    resolver: zodResolver(categorySchema),
     defaultValues: {
       title: "",
       description: "",
@@ -55,14 +55,14 @@ export default function Page() {
     },
   })
 
-  async function onSubmit(data: categoryFormSchemaType) {
+  async function onSubmit(data: categorySchemaType) {
     alert(`${data.title},"\n",${data.description}`)
   }
 
-  function handleEdit(row: categoryFormSchemaType) {
+  function handleEdit(row: categorySchemaType) {
     alert(row.title)
   }
-  function handleDelete(row: categoryFormSchemaType) {
+  function handleDelete(row: categorySchemaType) {
     alert(row.title)
   }
   return (

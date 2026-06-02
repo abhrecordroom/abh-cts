@@ -26,10 +26,7 @@ import { format } from "date-fns"
 import { FaCirclePlus } from "react-icons/fa6"
 // Validation import
 import { zodResolver } from "@hookform/resolvers/zod"
-import {
-  designationFormSchema,
-  designationFormSchemaType,
-} from "@/lib/validations"
+import { designationSchema, designationSchemaType } from "@/lib/validations"
 import { Designation, designation } from "@/lib/designation"
 import { DataTable, ColumnDef } from "@/components/table/data-table"
 import { ActiveState } from "@/components/status_badge/activeState"
@@ -48,8 +45,8 @@ const columns: ColumnDef<Designation>[] = [
 ]
 
 export default function Page() {
-  const form = useForm<designationFormSchemaType>({
-    resolver: zodResolver(designationFormSchema),
+  const form = useForm<designationSchemaType>({
+    resolver: zodResolver(designationSchema),
     defaultValues: {
       title: "",
       code: "",
@@ -57,14 +54,14 @@ export default function Page() {
     },
   })
 
-  async function onSubmit(data: designationFormSchemaType) {
+  async function onSubmit(data: designationSchemaType) {
     alert(`${data.title},"\n ",${data.code},"\n",${data.activeState}`)
   }
 
-  function handleEdit(row: designationFormSchemaType) {
+  function handleEdit(row: designationSchemaType) {
     alert(row.title)
   }
-  function handleDelete(row: designationFormSchemaType) {
+  function handleDelete(row: designationSchemaType) {
     alert(row.title)
   }
 

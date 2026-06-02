@@ -1,66 +1,84 @@
 "use client"
 
-const units = [
+export type Status = "Active" | "Disable"
+
+export type Unit = {
+  id: number
+  title: string
+  code: string
+  description?: string
+  activeState: Status
+}
+
+export const unit: Unit[] = [
   {
-    unit_id: 1,
-    unit_code: "01",
-    unit_name: "Ward 01",
-    is_Active: true,
+    id: 1,
+    code: "01",
+    title: "Ward 01",
+    description: "",
+    activeState: "Active",
   },
   {
-    unit_id: 2,
-    unit_code: "02",
-    unit_name: "Ward 02",
-    is_Active: true,
+    id: 2,
+    code: "02",
+    title: "Ward 02",
+    description: "",
+    activeState: "Active",
   },
   {
-    unit_id: 3,
-    unit_code: "03",
-    unit_name: "Ward 03",
-    is_Active: true,
+    id: 3,
+    code: "03",
+    title: "Ward 03",
+    description: "",
+    activeState: "Active",
   },
   {
-    unit_id: 4,
-    unit_code: "04",
-    unit_name: "Ward 04",
-    is_Active: true,
+    id: 4,
+    code: "04",
+    title: "Ward 04",
+    description: "",
+    activeState: "Active",
   },
   {
-    unit_id: 5,
-    unit_code: "05",
-    unit_name: "Ward 05",
-    is_Active: true,
+    id: 5,
+    code: "05",
+    title: "Ward 05",
+    description: "",
+    activeState: "Active",
   },
   {
-    unit_id: 6,
-    unit_code: "06",
-    unit_name: "Ward 06",
-    is_Active: true,
+    id: 6,
+    code: "06",
+    title: "Ward 06",
+    description: "",
+    activeState: "Active",
   },
   {
-    unit_id: 7,
-    unit_code: "07",
-    unit_name: "Ward 07",
-    is_Active: true,
+    id: 7,
+    code: "07",
+    title: "Ward 07",
+    description: "",
+    activeState: "Active",
   },
   {
-    unit_id: 8,
-    unit_code: "08",
-    unit_name: "Ward 08",
-    is_Active: true,
+    id: 8,
+    code: "08",
+    title: "Ward 08",
+    description: "",
+    activeState: "Active",
   },
   {
-    unit_id: 9,
-    unit_code: "09",
-    unit_name: "Ward 09",
-    is_Active: true,
+    id: 9,
+    code: "09",
+    title: "Ward 09",
+    description: "",
+    activeState: "Active",
   },
   {
-    unit_id: 10,
-    unit_code: "MBU",
-    unit_name: "Mother & Baby Unit",
-    is_Active: true,
+    id: 10,
+    code: "MBU",
+    title: "Mother & Baby Unit",
+    description: "",
+    activeState: "Active",
   },
 ]
-
-export default units

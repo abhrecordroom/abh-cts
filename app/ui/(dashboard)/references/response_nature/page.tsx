@@ -26,10 +26,7 @@ import { format } from "date-fns"
 import { FaCirclePlus } from "react-icons/fa6"
 // Validation import
 import { zodResolver } from "@hookform/resolvers/zod"
-import {
-  resposeNatureFormSchema,
-  resposeNatureFormSchemaType,
-} from "@/lib/validations"
+import { resposeNatureSchema, resposeNatureSchemaType } from "@/lib/validations"
 
 // Import DataTable
 import { ResponseNature, responseNatures } from "@/lib/responseNature"
@@ -52,8 +49,8 @@ const columns: ColumnDef<ResponseNature>[] = [
 ]
 
 export default function Page() {
-  const form = useForm<resposeNatureFormSchemaType>({
-    resolver: zodResolver(resposeNatureFormSchema),
+  const form = useForm<resposeNatureSchemaType>({
+    resolver: zodResolver(resposeNatureSchema),
     defaultValues: {
       title: "",
       description: "",
@@ -61,14 +58,14 @@ export default function Page() {
     },
   })
 
-  async function onSubmit(data: resposeNatureFormSchemaType) {
+  async function onSubmit(data: resposeNatureSchemaType) {
     alert(`${data.title},"\n",${data.description},"\n",${data.activeState}`)
   }
 
-  function handleEdit(row: resposeNatureFormSchemaType) {
+  function handleEdit(row: resposeNatureSchemaType) {
     alert(row.title)
   }
-  function handleDelete(row: resposeNatureFormSchemaType) {
+  function handleDelete(row: resposeNatureSchemaType) {
     alert(row.title)
   }
 

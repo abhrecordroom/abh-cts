@@ -50,15 +50,15 @@ import { ChevronDownIcon } from "lucide-react"
 
 // utility import
 import { format } from "date-fns"
-import Units from "@/lib/units"
+import { units } from "@/lib/units"
 import { category, Category } from "@/lib/category"
 // Validation import
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
-  formSchema,
-  formSchemaType,
-  assigneeFormSchema,
-  assigneeFormSchemaType,
+  complaintSchema,
+  complaintSchemaType,
+  assigneeSchema,
+  assigneeSchemaType,
 } from "@/lib/validations"
 import {
   Card,
@@ -126,8 +126,8 @@ export default function Page() {
   const [step, setStep] = useState(1)
 
   // Validation---------------------------------------------------------------------------------------------
-  const form = useForm<formSchemaType>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<complaintSchemaType>({
+    resolver: zodResolver(complaintSchema),
     defaultValues: {
       submittedOn: undefined as unknown as Date,
       pageNo: "",
@@ -138,8 +138,8 @@ export default function Page() {
       corresDescription: "",
     },
   })
-  const formAssignee = useForm<assigneeFormSchemaType>({
-    resolver: zodResolver(assigneeFormSchema),
+  const formAssignee = useForm<assigneeSchemaType>({
+    resolver: zodResolver(assigneeSchema),
     defaultValues: {
       assignee: [
         {
@@ -176,7 +176,7 @@ export default function Page() {
   }
 
   // onSubmit Function--------------------------------------------------------------------------------------
-  async function onSubmit(data: formSchemaType) {
+  async function onSubmit(data: complaintSchemaType) {
     // this
     const submitDate = format(data.submittedOn, "dd/MM/yyyy")
     const approvedDate = format(data.approvedOn, "dd/MM/yyyy")

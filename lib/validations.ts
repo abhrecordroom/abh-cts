@@ -76,7 +76,7 @@ export const categorySchema = z.object({
   }),
 })
 
-export type categoryFormSchemaType = z.infer<typeof categorySchema>
+export type categorySchemaType = z.infer<typeof categorySchema>
 
 /* 
 ----------------------------------------------------------------
@@ -145,7 +145,7 @@ export type complaintSchemaType = z.infer<typeof complaintSchema>
 // Validation for Correspondence form
 
 // Validation for Assignee
-export const assigneeFormSchema = z.object({
+export const assigneeSchema = z.object({
   assignee: z.array(
     z.object({
       assigneeType: z.string().min(1, "Assigee Type is Required"),
@@ -155,4 +155,4 @@ export const assigneeFormSchema = z.object({
   ),
 })
 
-export type assigneeFormSchemaType = z.infer<typeof assigneeFormSchema>
+export type assigneeSchemaType = z.infer<typeof assigneeFormSchema>
