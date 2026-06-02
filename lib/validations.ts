@@ -6,9 +6,9 @@ import z from "zod"
 ----------------------------------------------------------------
 */
 export const unitSchema = z.object({
-  unitName: z.string().min(1, "Unit name is required"),
-  unitCode: z.string().min(1, "Unit code is required"),
-  unitDescription: z.string(),
+  title: z.string().min(1, "Unit name is required"),
+  code: z.string().min(1, "Unit code is required"),
+  description: z.string().optional(),
   activeState: z.enum(["Active", "Disable"], {
     error: "Must select active state",
   }),
@@ -21,9 +21,12 @@ export type unitSchemaType = z.infer<typeof unitSchema>
 ----------------------------------------------------------------
 */
 export const personSchema = z.object({
-  unitName: z.string().min(1, "Unit name is required"),
-  unitCode: z.string().min(1, "Unit code is required"),
-  unitDescription: z.string(),
+  title: z.string().min(1, "title field is required"),
+  name: z.string().min(1, "Unit code is required"),
+  unit_name: z.string().min(1, "Unit code is required"),
+  designation: z.string().min(1, "Unit code is required"),
+  phone_no: z.string().min(1, "Phone no field is required"),
+  email: z.email().min(1, "Phone no field is required"),
   activeState: z.enum(["Active", "Disable"], {
     error: "Must select active state",
   }),
@@ -155,4 +158,4 @@ export const assigneeSchema = z.object({
   ),
 })
 
-export type assigneeSchemaType = z.infer<typeof assigneeFormSchema>
+export type assigneeSchemaType = z.infer<typeof assigneeSchema>

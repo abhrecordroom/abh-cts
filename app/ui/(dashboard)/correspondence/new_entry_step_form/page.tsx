@@ -50,7 +50,7 @@ import { ChevronDownIcon } from "lucide-react"
 
 // utility import
 import { format } from "date-fns"
-import { units } from "@/lib/units"
+import { unit } from "@/lib/units"
 import { category, Category } from "@/lib/category"
 // Validation import
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -305,7 +305,7 @@ export default function Page() {
                               <Combobox
                                 value={field.value}
                                 onValueChange={field.onChange}
-                                items={Units}
+                                items={unit}
                               >
                                 <ComboboxInput
                                   className="bg-gray-100"
@@ -316,10 +316,10 @@ export default function Page() {
                                   <ComboboxList>
                                     {(item) => (
                                       <ComboboxItem
-                                        key={item.unit_id}
-                                        value={item.unit_name}
+                                        key={item.id}
+                                        value={item.title}
                                       >
-                                        {item.unit_name}
+                                        {item.title}
                                       </ComboboxItem>
                                     )}
                                   </ComboboxList>
@@ -734,7 +734,6 @@ export default function Page() {
 
                         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                           <div>
-                            <h1>Column1</h1>
                             {/* Page no */}
                             {/* <Controller
                               name={`assignee.${index}.assigneeName`}
@@ -772,7 +771,7 @@ export default function Page() {
                                   <Combobox
                                     value={field.value}
                                     onValueChange={field.onChange}
-                                    items={Units}
+                                    items={unit}
                                   >
                                     <ComboboxInput
                                       className="bg-gray-100"
@@ -785,10 +784,10 @@ export default function Page() {
                                       <ComboboxList>
                                         {(item) => (
                                           <ComboboxItem
-                                            key={item.unit_id}
-                                            value={item.unit_name}
+                                            key={item.id}
+                                            value={item.title}
                                           >
-                                            {item.unit_name}
+                                            {item.title}
                                           </ComboboxItem>
                                         )}
                                       </ComboboxList>
@@ -805,7 +804,6 @@ export default function Page() {
                             />
                           </div>
                           <div>
-                            <h1>Column2</h1>
                             <Controller
                               name={`assignee.${index}.assignOn`}
                               control={formAssignee.control}

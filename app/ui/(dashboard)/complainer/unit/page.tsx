@@ -1,6 +1,6 @@
 "use client"
 
-import { React } from "react"
+import React from "react"
 // UI/Components import
 import { useForm, Controller } from "react-hook-form"
 import {
@@ -27,7 +27,7 @@ import { format } from "date-fns"
 import { FaCirclePlus } from "react-icons/fa6"
 // Validation import
 import { zodResolver } from "@hookform/resolvers/zod"
-import { designationSchema, designationSchemaType } from "@/lib/validations"
+import { unitSchema, unitSchemaType } from "@/lib/validations"
 import { Unit, unit } from "@/lib/units"
 import { DataTable, ColumnDef } from "@/components/table/data-table"
 import { ActiveState } from "@/components/status_badge/activeState"
@@ -47,23 +47,24 @@ const columns: ColumnDef<Unit>[] = [
 ]
 
 export default function Page() {
-  const form = useForm<designationSchemaType>({
-    resolver: zodResolver(designationSchema),
+  const form = useForm<unitSchemaType>({
+    resolver: zodResolver(unitSchema),
     defaultValues: {
       title: "",
       code: "",
+      description: "",
       activeState: "Active",
     },
   })
 
-  async function onSubmit(data: designationSchemaType) {
+  async function onSubmit(data: unitSchemaType) {
     alert(`${data.title},"\n ",${data.code},"\n",${data.activeState}`)
   }
 
-  function handleEdit(row: designationSchemaType) {
+  function handleEdit(row: unitSchemaType) {
     alert(row.title)
   }
-  function handleDelete(row: designationSchemaType) {
+  function handleDelete(row: unitSchemaType) {
     alert(row.title)
   }
 
@@ -80,30 +81,57 @@ export default function Page() {
 
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Create New Designation</DialogTitle>
+              <DialogTitle>Create New Unit</DialogTitle>
               <Separator />
               <DialogDescription>
-                This action will be create new designation for system.
+                This action will be create new unit for system.
               </DialogDescription>
             </DialogHeader>
 
             <FieldGroup>
-              <form id="myname_form" onSubmit={form.handleSubmit(onSubmit)}>
+              <form id="unit_form" onSubmit={form.handleSubmit(onSubmit)}>
                 <FieldGroup>
-                  {/* designation Section ----------------------------------------------------------- */}
-                  <div id="designation" className="rounded border">
+                  {/* Unit Section ----------------------------------------------------------- */}
+                  <div id="unit" className="rounded border">
                     <div className="flex flex-col gap-5 p-3">
-                      {/* Designation Name */}
+                      {/* Unit Title */}
                       <Controller
                         name="title"
                         control={form.control}
                         render={({ field, fieldState }) => (
                           <Field>
-                            <FieldLabel>Title</FieldLabel>
+                            <FieldLabel>
+                              Title<span className="text-destructive">*</span>
+                            </FieldLabel>
                             <Input
                               {...field}
                               id="title"
-                              placeholder="Enter the designation"
+                              placeholder="Enter the name"
+                              value={field.value}
+                            />
+                            {fieldState.invalid && (
+                              <FieldError
+                                className="text-xs"
+                                errors={[fieldState.error]}
+                              />
+                            )}
+                          </Field>
+                        )}
+                      />
+                      {/* Unit Code */}
+                      <Controller
+                        name="code"
+                        control={form.control}
+                        render={({ field, fieldState }) => (
+                          <Field>
+                            <FieldLabel>
+                              Short Code
+                              <span className="text-destructive">*</span>
+                            </FieldLabel>
+                            <Input
+                              {...field}
+                              id="code"
+                              placeholder="Enter the short code"
                               value={field.value}
                             />
                             {fieldState.invalid && (
@@ -118,15 +146,15 @@ export default function Page() {
 
                       {/* Designation code */}
                       <Controller
-                        name="code"
+                        name="description"
                         control={form.control}
                         render={({ field, fieldState }) => (
                           <Field>
-                            <FieldLabel>Short Code</FieldLabel>
+                            <FieldLabel>Description</FieldLabel>
                             <Input
                               {...field}
-                              id="code"
-                              placeholder="Enter short form of designation"
+                              id="description"
+                              placeholder="Enter the description"
                               value={field.value}
                             />
                             {fieldState.invalid && (
@@ -176,14 +204,14 @@ export default function Page() {
                   <div className="flex justify-center gap-3">
                     <Button
                       type="reset"
-                      form="myname_form"
+                      form="unit_form"
                       variant="outline"
                       className="w-40"
                       onClick={() => form.reset()}
                     >
                       Reset
                     </Button>
-                    <Button type="submit" form="myname_form" className="w-40">
+                    <Button type="submit" form="unit_form" className="w-40">
                       Create
                     </Button>
                   </div>
@@ -196,17 +224,15 @@ export default function Page() {
 
       <div id="form-set" className="rounded-tl-xl rounded-tr-xl border">
         <div className="form-section-heading">
-          <h1 className="font-bold text-white shadow-2xl">
-            Job Designation Details
-          </h1>
+          <h1 className="font-bold text-white shadow-2xl">Unit Details</h1>
         </div>
 
         <div className="p-3">
           <DataTable
             data={unit}
             columns={columns}
-            pageSize={10}
-            searchPlaceholder="Search Response nature"
+            pageSize={15}
+            searchPlaceholder="Search unit"
             actions={(row) => (
               <div className="flex items-center gap-2">
                 <Button

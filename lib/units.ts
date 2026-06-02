@@ -81,4 +81,11 @@ export const unit: Unit[] = [
     description: "",
     activeState: "Active",
   },
+  {
+    id: 11,
+    code: "MRSU",
+    title: "Medical Record room",
+    description: "",
+    activeState: "Active",
+  },
 ]
