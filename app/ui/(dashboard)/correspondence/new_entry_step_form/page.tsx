@@ -18,13 +18,22 @@ import {
 
 // import React from "react"
 // UI/Components import
-import { useForm, Controller, useFieldArray } from "react-hook-form"
+import { useForm, Controller, useFieldArray, useWatch } from "react-hook-form"
 import {
   Field,
   FieldLabel,
   FieldError,
   FieldGroup,
 } from "@/components/ui/field"
+import {
+  Select,
+  SelectLabel,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
 import { Calendar } from "@/components/ui/calendar"
 import {
@@ -51,6 +60,8 @@ import { ChevronDownIcon } from "lucide-react"
 // utility import
 import { format } from "date-fns"
 import { unit } from "@/lib/units"
+import { person } from "@/lib/person"
+import { hoiResponse } from "@/lib/hoiResponse"
 import { category, Category } from "@/lib/category"
 // Validation import
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -69,6 +80,8 @@ import {
 } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
+// import { name, name } from "next/dist/server/ci-info"
+import valueProcessor from "next/dist/build/webpack/loaders/resolve-url-loader/lib/value-processor"
 
 // =========================================================================================================
 // Code Section
@@ -136,6 +149,9 @@ export default function Page() {
       category: "",
       corresTitle: "",
       corresDescription: "",
+      approvedOn: undefined as unknown as Date,
+      hoiResponse: "",
+      remarks: "",
     },
   })
   const formAssignee = useForm<assigneeSchemaType>({
@@ -143,7 +159,7 @@ export default function Page() {
     defaultValues: {
       assignee: [
         {
-          assigneeType: "",
+          assigneeType: "unit",
           assigneeName: "",
           assignOn: undefined as unknown as Date,
         },
@@ -183,6 +199,23 @@ export default function Page() {
     alert(
       `${submitDate},"\n" ,${data.pageNo},"\n",${data.unit},"\n ",${data.inchargeName},"\n",${data.category},"\n ",${data.corresTitle},"\n ",${data.corresDescription},"\n ",${data.responseNature},"\n ",${approvedDate}`
     )
+
+    // const assigneeValues = formAssignee.getValues().assignee
+
+    // const assigneeDetails = assigneeValues.map((a) => {
+    //   const name =
+    //     a.assigneeType === "unit"
+    //       ? unit.find((u) => u.title === a.assigneeName)?.title
+    //       : person.find((p) => p.name === a.assigneeName)?.name
+
+    //   return [`Type : ${a.assigneeType}`, `Name : ${name}`]
+    // })
+
+    // const message = assigneeDetails
+    //   .map((a, i) => `── Assignee #${i + 1} ──\n${a}`)
+    //   .join("\n\n")
+
+    // alert(message)
   }
 
   // UI Render-----------------------------------------------------------------------------------------------
@@ -546,7 +579,7 @@ export default function Page() {
 
               {step === 2 && (
                 <Card>
-                  <CardHeader className="pb-4">
+                  <CardHeader className="mt-3 pb-4">
                     <div className="flex items-center gap-2">
                       <CheckCircle2 className="h-5 w-5 text-primary" />
                       <CardTitle className="text-lg">
@@ -591,7 +624,7 @@ export default function Page() {
                         </span>
                         <span>Nature:</span>
                         <span>
-                          <Badge variant="secondary">
+                          <Badge variant="default">
                             {form.getValues("responseNature")}
                           </Badge>
                         </span>
@@ -601,50 +634,126 @@ export default function Page() {
                     <Separator />
 
                     <div className="flex flex-col gap-3 p-3">
-                      {/* HOI Approvel */}
-                      <Controller
-                        name="approvedOn"
-                        control={form.control}
-                        render={({ field, fieldState }) => (
-                          <Field>
-                            <FieldLabel>Approved on</FieldLabel>
-                            <Popover>
-                              <PopoverTrigger asChild>
-                                <Button
-                                  variant="outline"
-                                  data-empty={!field.value}
-                                  className="w-53 justify-between bg-gray-100 text-left font-normal data-[empty=true]:text-muted-foreground"
-                                >
-                                  {field.value ? (
-                                    format(field.value, "dd/MM/yyyy")
-                                  ) : (
-                                    <span>Pick a date</span>
-                                  )}
-                                  <ChevronDownIcon />
-                                </Button>
-                              </PopoverTrigger>
-                              <PopoverContent
-                                className="w-auto p-0"
-                                align="start"
-                              >
-                                <Calendar
-                                  mode="single"
-                                  selected={field.value}
-                                  onSelect={field.onChange}
-                                  defaultMonth={field.value}
-                                />
-                              </PopoverContent>
-                            </Popover>
+                      <div className="flex gap-5">
+                        <div id="approvedDate" className="w-1/2">
+                          {/* HOI Approvel */}
+                          <Controller
+                            name="approvedOn"
+                            control={form.control}
+                            render={({ field, fieldState }) => (
+                              <Field>
+                                <FieldLabel>Approved on</FieldLabel>
+                                <Popover>
+                                  <PopoverTrigger asChild>
+                                    <Button
+                                      variant="outline"
+                                      data-empty={!field.value}
+                                      className="w-53 justify-between bg-gray-100 text-left font-normal data-[empty=true]:text-muted-foreground"
+                                    >
+                                      {field.value ? (
+                                        format(field.value, "dd/MM/yyyy")
+                                      ) : (
+                                        <span>Pick a date</span>
+                                      )}
+                                      <ChevronDownIcon />
+                                    </Button>
+                                  </PopoverTrigger>
+                                  <PopoverContent
+                                    className="w-auto p-0"
+                                    align="start"
+                                  >
+                                    <Calendar
+                                      mode="single"
+                                      selected={field.value}
+                                      onSelect={field.onChange}
+                                      defaultMonth={field.value}
+                                    />
+                                  </PopoverContent>
+                                </Popover>
 
-                            {fieldState.invalid && (
-                              <FieldError
-                                className="text-xs"
-                                errors={[fieldState.error]}
-                              />
+                                {fieldState.invalid && (
+                                  <FieldError
+                                    className="text-xs"
+                                    errors={[fieldState.error]}
+                                  />
+                                )}
+                              </Field>
                             )}
-                          </Field>
-                        )}
-                      />
+                          />
+                        </div>
+
+                        <div className="flex w-1/2 flex-col justify-center gap-3">
+                          {/* Nature of Response */}
+                          {/* <h1>Response dsfsdf</h1> */}
+                          <Controller
+                            name="hoiResponse"
+                            control={form.control}
+                            render={({ field, fieldState }) => (
+                              <Field>
+                                <FieldLabel>
+                                  Responce Nature
+                                  <span className="text-destructive">*</span>
+                                </FieldLabel>
+                                <Combobox
+                                  value={field.value}
+                                  onValueChange={field.onChange}
+                                  items={hoiResponse}
+                                >
+                                  <ComboboxInput
+                                    className="bg-gray-100"
+                                    placeholder="Select a Unit"
+                                  />
+                                  <ComboboxContent>
+                                    <ComboboxEmpty>
+                                      No items found.
+                                    </ComboboxEmpty>
+                                    <ComboboxList>
+                                      {(item) => (
+                                        <ComboboxItem
+                                          key={item.id}
+                                          value={item.title}
+                                        >
+                                          {item.title}
+                                        </ComboboxItem>
+                                      )}
+                                    </ComboboxList>
+                                  </ComboboxContent>
+                                </Combobox>
+                                {fieldState.invalid && (
+                                  <FieldError
+                                    className="text-xs"
+                                    errors={[fieldState.error]}
+                                  />
+                                )}
+                              </Field>
+                            )}
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        {/* Remarks */}
+                        {/* Description */}
+                        <Controller
+                          name="remarks"
+                          control={form.control}
+                          render={({ field, fieldState }) => (
+                            <Field>
+                              <FieldLabel>Remark</FieldLabel>
+                              <Textarea
+                                {...field}
+                                id="remarks"
+                                placeholder={`HOI Remark`}
+                              />
+                              {fieldState.invalid && (
+                                <FieldError
+                                  className="text-xs"
+                                  errors={[fieldState.error]}
+                                />
+                              )}
+                            </Field>
+                          )}
+                        />
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
@@ -699,16 +808,17 @@ export default function Page() {
                             <Field>
                               {/* <FieldLabel>Nature of Response</FieldLabel> */}
                               <RadioGroup
+                                defaultValue="unit"
                                 value={field.value}
                                 onValueChange={field.onChange}
                                 className="flex"
-                                defaultValue="unit"
                               >
                                 <div className="flex gap-2">
                                   <RadioGroupItem value="unit" id="unit" />
                                   <div className="flex">
                                     <Label htmlFor="unit">
-                                      <Building2 className="h-4 w-4" /> Unit
+                                      <Building2 className="h-4 w-4" />
+                                      Unit
                                     </Label>
                                   </div>
                                 </div>
@@ -717,7 +827,8 @@ export default function Page() {
                                   <RadioGroupItem value="person" id="person" />
                                   <div className="flex">
                                     <Label htmlFor="person">
-                                      <UserPlus className="h-4 w-4" /> Person
+                                      <UserPlus className="h-4 w-4" />
+                                      Person
                                     </Label>
                                   </div>
                                 </div>
@@ -732,7 +843,7 @@ export default function Page() {
                           )}
                         />
 
-                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                           <div>
                             {/* Page no */}
                             {/* <Controller
@@ -762,45 +873,103 @@ export default function Page() {
                             <Controller
                               name={`assignee.${index}.assigneeName`}
                               control={formAssignee.control}
-                              render={({ field, fieldState }) => (
-                                <Field>
-                                  <FieldLabel>
-                                    Unit
-                                    <span className="text-destructive">*</span>
-                                  </FieldLabel>
-                                  <Combobox
-                                    value={field.value}
-                                    onValueChange={field.onChange}
-                                    items={unit}
-                                  >
-                                    <ComboboxInput
-                                      className="bg-gray-100"
-                                      placeholder="Select a Unit"
-                                    />
-                                    <ComboboxContent>
-                                      <ComboboxEmpty>
-                                        No items found.
-                                      </ComboboxEmpty>
-                                      <ComboboxList>
-                                        {(item) => (
-                                          <ComboboxItem
-                                            key={item.id}
-                                            value={item.title}
-                                          >
-                                            {item.title}
-                                          </ComboboxItem>
-                                        )}
-                                      </ComboboxList>
-                                    </ComboboxContent>
-                                  </Combobox>
-                                  {fieldState.invalid && (
-                                    <FieldError
-                                      className="text-xs"
-                                      errors={[fieldState.error]}
-                                    />
-                                  )}
-                                </Field>
-                              )}
+                              render={({ field, fieldState }) => {
+                                const isUnit =
+                                  formAssignee.watch(
+                                    `assignee.${index}.assigneeType`
+                                  ) === "unit"
+
+                                return (
+                                  <Field>
+                                    <FieldLabel>
+                                      {isUnit ? "Unit" : "Person"}
+                                      <span className="text-destructive">
+                                        *
+                                      </span>
+                                    </FieldLabel>
+                                    <Combobox
+                                      value={field.value}
+                                      onValueChange={field.onChange}
+                                      items={unit}
+                                    >
+                                      <ComboboxInput
+                                        className="bg-gray-100"
+                                        placeholder={
+                                          isUnit
+                                            ? "Select Unit"
+                                            : "Select Person"
+                                        }
+                                      />
+                                      <ComboboxContent>
+                                        <ComboboxEmpty>
+                                          No items found.
+                                        </ComboboxEmpty>
+                                        <ComboboxList>
+                                          {isUnit
+                                            ? unit.map((data) => (
+                                                <ComboboxItem
+                                                  key={data.id}
+                                                  value={data.title}
+                                                >
+                                                  {data.title}
+                                                </ComboboxItem>
+                                              ))
+                                            : person.map((data) => (
+                                                <ComboboxItem
+                                                  key={data.id}
+                                                  value={data.name}
+                                                >
+                                                  {data.name}
+                                                  {" - "}
+                                                  {data.designation}
+                                                </ComboboxItem>
+                                              ))}
+                                        </ComboboxList>
+                                      </ComboboxContent>
+                                    </Combobox>
+                                    {fieldState.invalid && (
+                                      <FieldError
+                                        className="text-xs"
+                                        errors={[fieldState.error]}
+                                      />
+                                    )}
+
+                                    {/* <Select
+                                      onValueChange={field.onChange}
+                                      defaultValue={field.value}
+                                    >
+                                      <SelectTrigger className="w-full max-w-48">
+                                        <SelectValue
+                                          placeholder={
+                                            isUnit
+                                              ? "Select Unit"
+                                              : "Select Person"
+                                          }
+                                        />
+                                      </SelectTrigger>
+                                      <SelectContent>
+                                        {isUnit
+                                          ? unit.map((data) => (
+                                              <SelectItem
+                                                key={data.id}
+                                                value={data.title}
+                                              >
+                                                {data.title}
+                                              </SelectItem>
+                                            ))
+                                          : person.map((data) => (
+                                              <SelectItem
+                                                key={data.id}
+                                                value={data.name}
+                                              >
+                                                {data.name}
+                                              </SelectItem>
+                                            ))}
+                                      </SelectContent>
+                                    </Select> */}
+                                  </Field>
+                                )
+                              }}
                             />
                           </div>
                           <div>

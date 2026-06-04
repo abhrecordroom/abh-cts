@@ -111,6 +111,20 @@ export const statusSchema = z.object({
 })
 
 export type statusSchemaType = z.infer<typeof statusSchema>
+
+// Validation for Assignee
+export const assigneeSchema = z.object({
+  assignee: z.array(
+    z.object({
+      assigneeType: z.string().min(1, "Assigee Type is Required"),
+      assigneeName: z.string().min(1, "Category is Required"),
+      assignOn: z.date({ error: "Sumited Date is required" }),
+    })
+  ),
+})
+
+export type assigneeSchemaType = z.infer<typeof assigneeSchema>
+
 /* 
 ----------------------------------------------------------------
 08.COMPLAINT
@@ -129,6 +143,11 @@ export const complaintSchema = z.object({
   }),
 
   approvedOn: z.date({ error: "HOI apporved date is required" }),
+  remarks: z.string().optional(),
+  hoiResponse: z.string().min(1, "HOI Response field Required"),
+  assignees: z
+    .array(assigneeSchema)
+    .min(1, "At least one responsible person or unit must be assigned"),
 })
 
 export type complaintSchemaType = z.infer<typeof complaintSchema>
@@ -146,16 +165,3 @@ export type complaintSchemaType = z.infer<typeof complaintSchema>
 */
 
 // Validation for Correspondence form
-
-// Validation for Assignee
-export const assigneeSchema = z.object({
-  assignee: z.array(
-    z.object({
-      assigneeType: z.string().min(1, "Assigee Type is Required"),
-      assigneeName: z.string().min(1, "Category is Required"),
-      assignOn: z.date({ error: "Sumited Date is required" }),
-    })
-  ),
-})
-
-export type assigneeSchemaType = z.infer<typeof assigneeSchema>

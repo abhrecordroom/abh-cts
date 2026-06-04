@@ -2,42 +2,36 @@
 
 export type Status = "Active" | "Disable"
 
-export type Category = {
+export type HoiResponse = {
   id: number
   title: string
   description?: string
   activeState: Status
 }
 
-export const category: Category[] = [
+export const hoiResponse: HoiResponse[] = [
   {
     id: 1,
-    title: "Administrative",
+    title: "Emergency",
     description: "",
     activeState: "Active",
   },
   {
     id: 2,
-    title: "Equipments",
+    title: "Urgent",
     description: "",
     activeState: "Active",
   },
   {
     id: 3,
-    title: "Maintenance",
+    title: "Not Urgent",
     description: "",
     activeState: "Active",
   },
   {
     id: 4,
-    title: "Medical",
+    title: "Routine",
     description: "",
-    activeState: "Active",
-  },
-  {
-    id: 5,
-    title: "Others",
-    description: "",
-    activeState: "Active",
+    activeState: "Disable",
   },
 ]

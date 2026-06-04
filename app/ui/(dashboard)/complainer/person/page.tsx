@@ -101,7 +101,7 @@ export default function Page() {
     },
   ]
   return (
-    <main id="main-div" className="w-3/4">
+    <main id="main-div" className="lg:w-full">
       <div id="form-set" className="flex justify-end p-3">
         <Dialog>
           <DialogTrigger>
@@ -126,71 +126,73 @@ export default function Page() {
                   {/* TITLE ----------------------------------------------------------- */}
                   <div id="person" className="rounded border">
                     <div className="flex flex-col gap-5 p-3">
-                      <Controller
-                        name="title"
-                        control={form.control}
-                        render={({ field, fieldState }) => (
-                          <Field>
-                            <FieldLabel>
-                              Title<span className="text-destructive">*</span>
-                            </FieldLabel>
-                            <Combobox
-                              value={field.value}
-                              onValueChange={field.onChange}
-                              items={title}
-                            >
-                              <ComboboxInput
-                                className="bg-gray-100"
-                                placeholder="Select a Unit"
-                              />
-                              <ComboboxContent>
-                                <ComboboxEmpty>No items found.</ComboboxEmpty>
-                                <ComboboxList>
-                                  {(item) => (
-                                    <ComboboxItem
-                                      key={item.id}
-                                      value={item.title}
-                                    >
-                                      {item.title}
-                                    </ComboboxItem>
-                                  )}
-                                </ComboboxList>
-                              </ComboboxContent>
-                            </Combobox>
-                            {fieldState.invalid && (
-                              <FieldError
-                                className="text-xs"
-                                errors={[fieldState.error]}
-                              />
-                            )}
-                          </Field>
-                        )}
-                      />
+                      <div className="flex gap-3">
+                        <Controller
+                          name="title"
+                          control={form.control}
+                          render={({ field, fieldState }) => (
+                            <Field className="w-30">
+                              <FieldLabel>
+                                Title<span className="text-destructive">*</span>
+                              </FieldLabel>
+                              <Combobox
+                                value={field.value}
+                                onValueChange={field.onChange}
+                                items={title}
+                              >
+                                <ComboboxInput
+                                  className="bg-gray-100"
+                                  placeholder="Title"
+                                />
+                                <ComboboxContent>
+                                  <ComboboxEmpty>No items found.</ComboboxEmpty>
+                                  <ComboboxList>
+                                    {(item) => (
+                                      <ComboboxItem
+                                        key={item.id}
+                                        value={item.title}
+                                      >
+                                        {item.title}
+                                      </ComboboxItem>
+                                    )}
+                                  </ComboboxList>
+                                </ComboboxContent>
+                              </Combobox>
+                              {fieldState.invalid && (
+                                <FieldError
+                                  className="text-xs"
+                                  errors={[fieldState.error]}
+                                />
+                              )}
+                            </Field>
+                          )}
+                        />
 
-                      {/* NAME */}
-                      <Controller
-                        name="name"
-                        control={form.control}
-                        render={({ field, fieldState }) => (
-                          <Field>
-                            <FieldLabel>
-                              Name<span className="text-destructive">*</span>
-                            </FieldLabel>
-                            <Input
-                              {...field}
-                              id="name"
-                              placeholder="Enter the name"
-                              value={field.value}
-                            />
-                            {fieldState.invalid && (
-                              <FieldError
-                                className="text-xs"
-                                errors={[fieldState.error]}
+                        {/* NAME */}
+                        <Controller
+                          name="name"
+                          control={form.control}
+                          render={({ field, fieldState }) => (
+                            <Field>
+                              <FieldLabel>
+                                Name<span className="text-destructive">*</span>
+                              </FieldLabel>
+                              <Input
+                                {...field}
+                                id="name"
+                                placeholder="Enter the name"
+                                value={field.value}
                               />
-                            )}
-                          </Field>
-                        )}
-                      />
+                              {fieldState.invalid && (
+                                <FieldError
+                                  className="text-xs"
+                                  errors={[fieldState.error]}
+                                />
+                              )}
+                            </Field>
+                          )}
+                        />
+                      </div>
                       {/* Unit Code */}
                       {/* <Controller
                         name="code"
