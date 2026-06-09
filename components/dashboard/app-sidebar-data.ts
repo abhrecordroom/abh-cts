@@ -32,13 +32,13 @@ const data = {
   navMain: [
     {
       title: "Dashboard",
-      url: "#",
+      url: "/dashboard",
       icon: Gauge,
       isActive: false,
       items: [
         {
           title: "Overview",
-          url: "/",
+          url: "ui/correspondence/test_form",
         },
         {
           title: "Unit View",

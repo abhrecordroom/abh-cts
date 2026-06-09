@@ -1,6 +1,6 @@
 // import { Button } from "@/components/ui/button"
-import Dashboard from "./ui/(dashboard)/page"
+import Login from "./ui/authentication/page"
 
 export default function Page() {
-  return <Dashboard />
+  return <Login />
 }
