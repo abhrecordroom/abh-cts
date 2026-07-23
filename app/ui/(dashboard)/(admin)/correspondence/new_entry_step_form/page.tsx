@@ -509,7 +509,7 @@ export default function Page() {
                       <h1 className="font-bold">Nature of Response</h1>
                     </div>
 
-                    <div className="w-1/2 p-5">
+                    <div className="w-full p-2">
                       {/* Nature of Response */}
                       <Controller
                         name="responseNature"
@@ -523,43 +523,48 @@ export default function Page() {
                               onValueChange={field.onChange}
                               className="flex justify-around"
                             >
-                              <div className="flex w-40 flex-col items-center justify-center gap-3 rounded border-2 border-gray-300 p-3 text-red-800">
-                                <div className="flex flex-col items-center justify-center gap-2 text-center">
-                                  <Label htmlFor="emergency">
-                                    🚨 Emergency
-                                  </Label>
+                              <div className="flex h-16 w-60 flex-col items-center justify-center gap-3 rounded border-2 border-gray-100 bg-red-600 p-3 text-white">
+                                <div className="flex items-center justify-center gap-2 text-center">
                                   <RadioGroupItem
                                     value="Emergency"
                                     id="emergency"
                                   />
-                                  <p className="text-xs text-gray-400">
-                                    [With in 2 days]
-                                  </p>
+                                  <div className="flex flex-col justify-center gap-2">
+                                    <Label htmlFor="emergency">Emergency</Label>
+                                    <p className="text-xs text-gray-400">
+                                      [With in 2 days]
+                                    </p>
+                                  </div>
                                 </div>
                               </div>
-
-                              <div className="flex w-40 flex-col items-center justify-center gap-3 rounded border-2 border-gray-300 p-3 text-orange-800">
-                                <div className="flex flex-col items-center justify-center gap-2 text-center">
-                                  <Label htmlFor="urgent">⚠️ Urgent</Label>
-                                  <RadioGroupItem value="Urgent" id="urgent" />
-                                  <p className="text-xs text-gray-400">
-                                    [With in 3-7 days]
-                                  </p>
-                                </div>
-                              </div>
-
-                              <div className="flex w-40 flex-col items-center justify-center gap-3 rounded border-2 border-gray-300 p-3 text-green-800">
-                                <div className="flex flex-col items-center justify-center gap-2 text-center">
-                                  <Label htmlFor="not-urgent">
-                                    🔰 Not Urgent
-                                  </Label>
+                              <div className="flex h-16 w-60 flex-col items-center justify-center gap-3 rounded border-2 border-gray-100 bg-yellow-400">
+                                <div className="flex items-center justify-center gap-2 text-center">
                                   <RadioGroupItem
-                                    value="Not-urgent"
-                                    id="not-urgent"
+                                    value="Emergency"
+                                    id="emergency"
                                   />
-                                  <p className="text-xs text-gray-400">
-                                    [With in 14 days]
-                                  </p>
+                                  <div className="flex flex-col justify-center gap-2">
+                                    <Label htmlFor="emergency">Urgent</Label>
+                                    <p className="text-xs text-gray-400">
+                                      [With in 3-7 days]
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="flex h-16 w-60 flex-col items-center justify-center gap-3 rounded border-2 border-gray-300 p-3 text-blue-800">
+                                <div className="flex items-center justify-center gap-2 text-center">
+                                  <RadioGroupItem
+                                    value="Emergency"
+                                    id="emergency"
+                                  />
+                                  <div className="flex flex-col justify-center gap-2">
+                                    <Label htmlFor="emergency">
+                                      Not urgent
+                                    </Label>
+                                    <p className="text-xs text-gray-400">
+                                      [With in 14 days]
+                                    </p>
+                                  </div>
                                 </div>
                               </div>
                             </RadioGroup>

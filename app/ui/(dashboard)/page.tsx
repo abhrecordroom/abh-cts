@@ -1,5 +1,5 @@
 import React from "react"
-import Overview from "./dash_overview/page"
+import Overview from "@/app/ui/(dashboard)/(admin)/dash_overview/page"
 import { AppSidebar } from "@/components/dashboard/app-sidebar"
 import {
   SidebarProvider,

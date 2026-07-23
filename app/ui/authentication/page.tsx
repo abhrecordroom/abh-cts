@@ -49,7 +49,7 @@ function Page() {
               {...register("username")}
               type="text"
               name="username"
-              placeholder="Enter the username"
+              placeholder="Enter the username 123"
             />
             <Input
               {...register("password")}

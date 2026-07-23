@@ -5,6 +5,7 @@ import {
   SidebarInset,
 } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
+import { DASHBOARD_TITLE } from "@/app.settings"
 
 export default function Layout({
   children,
@@ -23,9 +24,7 @@ export default function Layout({
                 orientation="vertical"
                 className="mr-2 data-[orientation=vertical]:h-4"
               />
-              <h1 className="text-2xl font-semibold">
-                Correspondence Tracker - BH Akkaraipattu!
-              </h1>
+              <h1 className="text-2xl font-semibold">{DASHBOARD_TITLE}</h1>
             </div>
           </header>
           <div className="p-5">{children}</div>

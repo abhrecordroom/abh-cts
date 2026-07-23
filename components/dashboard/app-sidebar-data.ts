@@ -32,7 +32,7 @@ const data = {
   navMain: [
     {
       title: "Dashboard",
-      url: "/dashboard",
+      url: "/dashboard/admin",
       icon: Gauge,
       isActive: false,
       items: [
